@@ -1,0 +1,17 @@
+<header>
+
+<a href="{% url 'homeview' %}"> Freelancer.com</a>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'freelancer/style.css' %}" />
+
+{% block additional_css %}{% endblock additional_css %}
+
+</header>
+
+    {% block content %}{% endblock %}
+
+<footer>
+
+</footer>

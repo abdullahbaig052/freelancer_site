@@ -1,0 +1,6 @@
+<a style="color: red;" title="Delete"
+   href={% url 'deleteprojectview' id=project_detail.id %}>x</a>
+
+<a href={% url 'editprojectview' id=project_detail.id %}>Edit</a>
+
+<a title="Bids" href={% url "projectbidsview" id=project_detail.id %}>Bids</a>

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Home Page</h3>
+
+<a href={% url "logoutview" %}>Logout</a>
+
+<a href={% url "editview" %}>Edit Details</a>
+
+<br/>
+
+<span>Username: </span><label>{{ request.user.username }}</label><br>
+<span>First Name: </span><label>{{ request.user.first_name }}</label><br>
+<span>Last Name: </span><label>{{ request.user.last_name }}</label><br>
+<span>User Role: </span><label>{{ request.user.appuser.user_type }}</label><br>
+
+<h4> I want to {{ request.user.appuser.user_type }}</h4>
+{% if request.user.appuser.user_type == 'hire' %}
+    <a href={% url "post_project_view" %}>Post a Project</a>
+{% endif %}
+
+{% if userbids %}
+    <h6>Your Bids</h6>
+
+        <table>
+            <tbody>
+                <tr>
+                    <th>Project ID</th>
+                    <th>Cover Letter</th>
+                    <th>Your Bid</th>
+                    <th>Status</th>
+                </tr>
+                {% for userbid in userbids %}
+                <tr>
+                    <td>
+                        <a title="View Project" href={% url "project_detail_view" id=userbid.project_id %}>
+                            {{ userbid.project_id }}</a>
+                    </td>
+                    <td>{{ userbid.cover_letter }}</td>
+                    <td>{{ userbid.bid_amount }}</td>
+                    {% if userbid.project_status == "Hired" %}
+                        <td><a>{{ userbid.project_status }}</a></td>
+                    {% else %}
+                        <td>{{ userbid.status }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+{% endif %}
+
+<h5>Projects</h5>
+<table>
+    <tbody>
+        <tr>
+            <th>Project Name</th>
+            <th>Project Description</th>
+            <th>Project Budget</th>
+            <th>Functionalities</th>
+        </tr>
+        {% for project_detail in project_details %}
+        <tr>
+            <td>{{ project_detail.name }}</td>
+            <td>{{ project_detail.description }}</td>
+            <td>{{ project_detail.budget }}</td>
+            <td>
+            {% if request.user.appuser.user_type == 'hire' %}
+
+                {% include "user_type_hire.html" %}
+
+            {% else %}
+
+                {% include "user_type_work.html" %}
+
+            {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

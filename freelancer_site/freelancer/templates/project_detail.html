@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Project Details</h3>
+
+<label>Name: </label><b>{{ project_details.name }}</b><br>
+<label>Description: </label><p>{{ project_details.description }}</p><br>
+<label>Budget: </label><span>{{ project_details.budget }}</span><br>
+
+{% endblock %}

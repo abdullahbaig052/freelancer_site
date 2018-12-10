@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Below are the Bidders on this project</h3>
+
+<table>
+    <tbody>
+        <tr>
+            <th>Project ID</th>
+            <th>User ID</th>
+            <th>Cover Letter</th>
+            <th>Bid</th>
+            <th>actions</th>
+            <th>Current Status</th>
+            <th>Project Status</th>
+        </tr>
+        {% for bid in bids %}
+        <tr>
+            <td>
+                <a title="View Project" href={% url "project_detail_view" id=bid.project_id %}>
+                    {{ bid.project_id }}</a>
+            </td>
+            <td>
+                <a title="View User" href={% url "profileview" id=bid.user_id %}>{{ bid.user_id }}</a>
+            </td>
+            <td>{{ bid.cover_letter }}</td>
+            <td>{{ bid.bid_amount }}</td>
+            <td>
+                {% if bid.status == "Pending" %}
+                    <form method="post" action="{% url 'projectbidsview' id=bid.id %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </form>
+                {% else %}
+                {{ bid.status }}
+                {% endif %}
+            </td>
+            <td>{{ bid.status }}</td>
+            <td>{{ bid.project_status }}</td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+{% endblock %}

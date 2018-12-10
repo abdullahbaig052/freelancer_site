@@ -1,0 +1,9 @@
+{% if project_detail.id in status_hired %}
+    <a>Hired</a>
+{% else %}
+    {% if project_detail.id in bids_project_ids %}
+        <a>Applied</a>
+    {% else %}
+        <a title="Bid on this Project" href={% url "userbidsview" id=project_detail.id %}>Apply</a>
+    {% endif %}
+{% endif %}
